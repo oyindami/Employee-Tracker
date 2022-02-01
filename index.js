@@ -1,5 +1,5 @@
 const { prompt } = require("inquirer");
-const db = require("./db");
+const db = require("./db/index");
 require("console.table");
 const connection = require("./db/connection");
 //const db = require("./db/connection");
@@ -87,33 +87,33 @@ function runPrompts() {
 
 //employee view
 function viewAllEmployees() {
-  db.allEmployees()
+  db.viewallEmployees()
     .then(([rows]) => {
       let employees = rows;
       console.log("\n");
-      console.table(employees);
+      console.table(employee);
     })
     .then(() => runPrompts());
 }
 
 // roles view
 function viewAllRoles() {
-  db.allRoles()
+  db.viewallRole()
     .then(([rows]) => {
       let roles = rows;
       console.log("\n");
-      console.table(roles);
+      console.table(role);
     })
     .then(() => runPrompts());
 }
 
 // department info.
 function viewAllDepartments() {
-  db.allDepartments()
+  db.viewallDepartments()
     .then(([rows]) => {
-      let departments = rows;
+      let department = rows;
       console.log("\n");
-      console.table(departments);
+      console.table(department);
     })
     .then(() => runPrompts());
 }
@@ -121,8 +121,8 @@ function viewAllDepartments() {
 // Add a role
 function createRole() {
   db.allDepartments().then(([rows]) => {
-    let departments = rows;
-    const departmentChoices = departments.map(({ id, name }) => ({
+    let department = rows;
+    const departmentChoices = department.map(({ id, name }) => ({
       name: name,
       value: id,
     }));
@@ -177,8 +177,8 @@ function createEmployee() {
       message: "What's the employee's last name?",
     },
   ]).then((res) => {
-    let firstName = res.first_name;
-    let lastName = res.last_name;
+    let firstName = res.First_name;
+    let lastName = res.Last_name;
 
     db.allRoles().then(([rows]) => {
       let roles = rows;
@@ -216,8 +216,8 @@ function createEmployee() {
               let employee = {
                 manager_id: res.managerId,
                 role_id: roleId,
-                first_name: firstName,
-                last_name: lastName,
+                First_name: firstName,
+                Last_name: lastName,
               };
 
               db.addEmployee(employee);
@@ -235,9 +235,9 @@ function createEmployee() {
 //to update an employees information
 function updateEmployeeRole() {
   db.allEmployees().then(([rows]) => {
-    let employees = rows;
-    const employeeChoices = employees.map(({ id, first_name, last_name }) => ({
-      name: `${first_name} ${last_name}`,
+    let employee = rows;
+    const employeeChoices = employee.map(({ id, First_name, Last_name }) => ({
+      name: `${First_name} ${Last_name}`,
       value: id,
     }));
 
@@ -251,8 +251,8 @@ function updateEmployeeRole() {
     ]).then((res) => {
       let employeeId = res.employeeId;
       db.allRoles().then(([rows]) => {
-        let roles = rows;
-        const roleChoices = roles.map(({ id, title }) => ({
+        let role = rows;
+        const roleChoices = role.map(({ id, title }) => ({
           name: title,
           value: id,
         }));

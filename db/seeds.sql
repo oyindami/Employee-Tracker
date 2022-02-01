@@ -1,15 +1,13 @@
 
 
-INSERT INTO department
-
-    (sector)
+INSERT INTO department (name)
 VALUES
     ('Human Resources'),
     ('Marketing'),
     ('Information Technology'),
     ('Accounting');
 
-INSERT INTO roles
+INSERT INTO role
     (title, salary, department_id)
 VALUES
     ('HR Manager', 100000, 1),
@@ -22,7 +20,7 @@ VALUES
     ('Accountant', 90000, 4);
   
 INSERT INTO employee
-    (First_name, Last_name, roles_id, manager_id)
+    (First_name, Last_name, role_id, manager_id)
 VALUES
     ('Oyin', 'Peterson', 1, NULL),
     ('Thomas', 'Lovett', 2, 1),
